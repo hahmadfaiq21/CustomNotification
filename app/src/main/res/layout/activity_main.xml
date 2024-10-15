@@ -30,6 +30,13 @@
         android:maxLines="1" />
 
     <Button
+        android:id="@+id/btn_open_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/open_detail" />
+
+    <Button
         android:id="@+id/btn_send_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
