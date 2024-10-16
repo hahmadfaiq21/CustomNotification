@@ -66,12 +66,21 @@ class MainActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
+        val actionIntent = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(notificationDetailIntent)
+            getPendingIntent(
+                NOTIFICATION_ID,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        }
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(message)
             .setContentIntent(pendingIntent)
+            .addAction(R.drawable.ic_notification, "Open Detail", actionIntent)
             .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
