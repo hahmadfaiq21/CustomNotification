@@ -9,8 +9,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -25,11 +25,12 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+                Log.i("PermissionStatus", "Notification permission granted")
             } else {
-                Toast.makeText(this, "Notification permission rejected", Toast.LENGTH_SHORT).show()
+                Log.e("PermissionStatus", "Notification permission rejected")
             }
         }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,18 +127,18 @@ class MainActivity : AppCompatActivity() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         if (withAction) {
-            builder.addAction(R.drawable.ic_notification, "Open Detail", pendingIntent)
+            builder.addAction(R.drawable.ic_notification, "Detail", pendingIntent)
         } else if (withInboxStyle) {
             builder.setStyle(
                 NotificationCompat.InboxStyle()
                     .setBigContentTitle("Inbox Style")
-                    .addLine("First message")
-                    .addLine("Second message")
-                    .addLine("Third message")
-                    .addLine("Fourth message")
-                    .addLine("Fifth message")
-                    .addLine("Sixth message")
-                    .addLine("Seventh message")
+                    .addLine("First line")
+                    .addLine("Second line")
+                    .addLine("Third line")
+                    .addLine("Fourth line")
+                    .addLine("Fifth line")
+                    .addLine("Sixth line")
+                    .addLine("Seventh line")
             )
         } else if (withBigTextStyle) {
             builder.setStyle(
