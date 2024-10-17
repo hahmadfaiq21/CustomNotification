@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        with(binding) {
+        binding.apply {
             btnOpenDetail.setOnClickListener { openDetailActivity() }
             etTitle.addTextWatcher { checkInputFilled() }
             etMessage.addTextWatcher { checkInputFilled() }
@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
             btnSendNotificationWithAction.setOnClickListener { sendNotificationWithAction() }
             btnSendNotificationWithInboxStyle.isEnabled = false
             btnSendNotificationWithInboxStyle.setOnClickListener { sendNotificationWithInboxStyle() }
+            btnSendNotificationWithBigTextStyle.isEnabled = false
+            btnSendNotificationWithBigTextStyle.setOnClickListener { sendNotificationWithBigTextStyle() }
         }
     }
 
@@ -61,10 +63,16 @@ class MainActivity : AppCompatActivity() {
                 etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
             btnSendNotificationWithInboxStyle.isEnabled =
                 etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
+            btnSendNotificationWithBigTextStyle.isEnabled =
+                etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
         }
     }
 
-    private fun sendNotification(withAction: Boolean = false, withInboxStyle: Boolean = false) {
+    private fun sendNotification(
+        withAction: Boolean = false,
+        withInboxStyle: Boolean = false,
+        withBigTextStyle: Boolean = false
+    ) {
         val (title, message) = binding.run { etTitle.text.toString() to etMessage.text.toString() }
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -92,6 +100,12 @@ class MainActivity : AppCompatActivity() {
                     .addLine("Seventh message")
                     .setBigContentTitle("Big Content Title")
                     .setSummaryText("Summary Text")
+            )
+        } else if (withBigTextStyle) {
+            builder.setStyle(
+                NotificationCompat.BigTextStyle()
+                    .setBigContentTitle("Big Content Title")
+                    .bigText(getString(R.string.text_dummy))
             )
         }
 
@@ -126,6 +140,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendNotificationWithAction() = sendNotification(withAction = true)
     private fun sendNotificationWithInboxStyle() = sendNotification(withInboxStyle = true)
+    private fun sendNotificationWithBigTextStyle() = sendNotification(withBigTextStyle = true)
 
     private fun EditText.addTextWatcher(afterTextChanged: () -> Unit) {
         this.addTextChangedListener { afterTextChanged() }
