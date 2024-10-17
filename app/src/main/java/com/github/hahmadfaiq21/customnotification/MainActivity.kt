@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        registerForActivityResult(ActivityResultContracts.RequestPermission())
+        { isGranted: Boolean ->
             if (isGranted) {
                 Log.i("PermissionStatus", "Notification permission granted")
             } else {
