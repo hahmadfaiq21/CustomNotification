@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
             btnSendNotification.setOnClickListener { sendNotification() }
             btnSendNotificationWithAction.isEnabled = false
             btnSendNotificationWithAction.setOnClickListener { sendNotificationWithAction() }
+            btnSendNotificationWithInboxStyle.isEnabled = false
+            btnSendNotificationWithInboxStyle.setOnClickListener { sendNotificationWithInboxStyle() }
         }
     }
 
@@ -52,13 +54,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkInputFilled() {
-        binding.btnSendNotification.isEnabled =
-            binding.etTitle.text!!.isNotBlank() && binding.etMessage.text!!.isNotBlank()
-        binding.btnSendNotificationWithAction.isEnabled =
-            binding.etTitle.text!!.isNotBlank() && binding.etMessage.text!!.isNotBlank()
+        binding.apply {
+            btnSendNotification.isEnabled =
+                etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
+            btnSendNotificationWithAction.isEnabled =
+                etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
+            btnSendNotificationWithInboxStyle.isEnabled =
+                etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
+        }
     }
 
-    private fun sendNotification(withAction: Boolean = false) {
+    private fun sendNotification(withAction: Boolean = false, withInboxStyle: Boolean = false) {
         val (title, message) = binding.run { etTitle.text.toString() to etMessage.text.toString() }
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -74,6 +80,19 @@ class MainActivity : AppCompatActivity() {
 
         if (withAction) {
             builder.addAction(R.drawable.ic_notification, "Open Detail", pendingIntent)
+        } else if (withInboxStyle) {
+            builder.setStyle(
+                NotificationCompat.InboxStyle()
+                    .addLine("First message")
+                    .addLine("Second message")
+                    .addLine("Third message")
+                    .addLine("Fourth message")
+                    .addLine("Fifth message")
+                    .addLine("Sixth message")
+                    .addLine("Seventh message")
+                    .setBigContentTitle("Big Content Title")
+                    .setSummaryText("Summary Text")
+            )
         }
 
         createNotificationChannel(notificationManager)
@@ -106,6 +125,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendNotificationWithAction() = sendNotification(withAction = true)
+    private fun sendNotificationWithInboxStyle() = sendNotification(withInboxStyle = true)
 
     private fun EditText.addTextWatcher(afterTextChanged: () -> Unit) {
         this.addTextChangedListener { afterTextChanged() }

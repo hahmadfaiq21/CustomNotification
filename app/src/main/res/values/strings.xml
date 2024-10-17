@@ -5,4 +5,5 @@
     <string name="send_notification">Send Notification</string>
     <string name="open_detail">Open Detail</string>
     <string name="send_notification_with_action">Send Notification with Action</string>
+    <string name="send_notification_with_inbox_style">Send Notification with Inbox Style</string>
 </resources>
