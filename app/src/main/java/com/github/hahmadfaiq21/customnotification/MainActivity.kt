@@ -5,9 +5,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
@@ -18,23 +22,54 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Notification permission rejected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (Build.VERSION.SDK_INT >= 33) {
+            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+
         binding.apply {
             btnOpenDetail.setOnClickListener { openDetailActivity() }
+
             etTitle.addTextWatcher { checkInputFilled() }
             etMessage.addTextWatcher { checkInputFilled() }
+
             btnSendNotification.isEnabled = false
-            btnSendNotification.setOnClickListener { sendNotification() }
+            btnSendNotification.setOnClickListener {
+                sendNotification()
+            }
+
             btnSendNotificationWithAction.isEnabled = false
-            btnSendNotificationWithAction.setOnClickListener { sendNotificationWithAction() }
+            btnSendNotificationWithAction.setOnClickListener {
+                sendNotificationWithAction()
+            }
+
             btnSendNotificationWithInboxStyle.isEnabled = false
-            btnSendNotificationWithInboxStyle.setOnClickListener { sendNotificationWithInboxStyle() }
+            btnSendNotificationWithInboxStyle.setOnClickListener {
+                sendNotificationWithInboxStyle()
+            }
+
             btnSendNotificationWithBigTextStyle.isEnabled = false
-            btnSendNotificationWithBigTextStyle.setOnClickListener { sendNotificationWithBigTextStyle() }
+            btnSendNotificationWithBigTextStyle.setOnClickListener {
+                sendNotificationWithBigTextStyle()
+            }
+
+            btnSendNotificationWithBigPictureStyle.isEnabled = false
+            btnSendNotificationWithBigPictureStyle.setOnClickListener {
+                sendNotificationWithBigPictureStyle()
+            }
         }
     }
 
@@ -65,13 +100,16 @@ class MainActivity : AppCompatActivity() {
                 etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
             btnSendNotificationWithBigTextStyle.isEnabled =
                 etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
+            btnSendNotificationWithBigPictureStyle.isEnabled =
+                etTitle.text!!.isNotBlank() && etMessage.text!!.isNotBlank()
         }
     }
 
     private fun sendNotification(
         withAction: Boolean = false,
         withInboxStyle: Boolean = false,
-        withBigTextStyle: Boolean = false
+        withBigTextStyle: Boolean = false,
+        withBigPictureStyle: Boolean = false
     ) {
         val (title, message) = binding.run { etTitle.text.toString() to etMessage.text.toString() }
         val notificationManager =
@@ -107,6 +145,14 @@ class MainActivity : AppCompatActivity() {
                     .setBigContentTitle("Big Text Style")
                     .bigText(getString(R.string.text_dummy))
             )
+        } else if (withBigPictureStyle) {
+            val picture = BitmapFactory.decodeResource(resources, R.drawable.android_logo)
+            builder.setLargeIcon(picture).setStyle(
+                NotificationCompat.BigPictureStyle()
+                    .bigLargeIcon(null as Bitmap?)
+                    .setBigContentTitle("Big Picture Style")
+                    .bigPicture(picture)
+            )
         }
 
         createNotificationChannel(notificationManager)
@@ -138,9 +184,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendNotificationWithAction() = sendNotification(withAction = true)
-    private fun sendNotificationWithInboxStyle() = sendNotification(withInboxStyle = true)
-    private fun sendNotificationWithBigTextStyle() = sendNotification(withBigTextStyle = true)
+    private fun sendNotificationWithAction() =
+        sendNotification(withAction = true)
+
+    private fun sendNotificationWithInboxStyle() =
+        sendNotification(withInboxStyle = true)
+
+    private fun sendNotificationWithBigTextStyle() =
+        sendNotification(withBigTextStyle = true)
+
+    private fun sendNotificationWithBigPictureStyle() =
+        sendNotification(withBigPictureStyle = true)
 
     private fun EditText.addTextWatcher(afterTextChanged: () -> Unit) {
         this.addTextChangedListener { afterTextChanged() }
