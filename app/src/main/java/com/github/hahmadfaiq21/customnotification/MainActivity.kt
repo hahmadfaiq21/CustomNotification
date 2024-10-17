@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle(title)
             .setContentText(message)
             .setContentIntent(pendingIntent)
+            .setSubText("Subtext")
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
@@ -91,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         } else if (withInboxStyle) {
             builder.setStyle(
                 NotificationCompat.InboxStyle()
+                    .setBigContentTitle("Inbox Style")
                     .addLine("First message")
                     .addLine("Second message")
                     .addLine("Third message")
@@ -98,13 +100,11 @@ class MainActivity : AppCompatActivity() {
                     .addLine("Fifth message")
                     .addLine("Sixth message")
                     .addLine("Seventh message")
-                    .setBigContentTitle("Big Content Title")
-                    .setSummaryText("Summary Text")
             )
         } else if (withBigTextStyle) {
             builder.setStyle(
                 NotificationCompat.BigTextStyle()
-                    .setBigContentTitle("Big Content Title")
+                    .setBigContentTitle("Big Text Style")
                     .bigText(getString(R.string.text_dummy))
             )
         }
