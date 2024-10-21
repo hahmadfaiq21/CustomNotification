@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         if (withAction) {
-            builder.addAction(R.drawable.ic_notification, "Detail", pendingIntent)
+            builder.addAction(R.drawable.ic_notification, "DETAIL", pendingIntent)
         } else if (withInboxStyle) {
             builder.setStyle(
                 NotificationCompat.InboxStyle()
