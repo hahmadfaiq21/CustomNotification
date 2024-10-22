@@ -43,32 +43,47 @@
         android:layout_margin="8dp"
         android:text="@string/send_notification" />
 
-    <Button
-        android:id="@+id/btn_send_notification_with_action"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/send_notification_with_action" />
+        android:layout_margin="8dp">
 
-    <Button
-        android:id="@+id/btn_send_notification_with_inbox_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/send_notification_with_inbox_style" />
+        <TableRow android:gravity="center">
 
-    <Button
-        android:id="@+id/btn_send_notification_with_big_text_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/send_notification_with_big_text_style" />
+            <Button
+                android:id="@+id/btn_send_notification_with_action"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="@string/send_notification_with_action" />
 
-    <Button
-        android:id="@+id/btn_send_notification_with_big_picture_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/send_notification_with_big_picture_style" />
+            <Button
+                android:id="@+id/btn_send_notification_with_inbox_style"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="@string/send_notification_with_inbox_style" />
+        </TableRow>
 
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_send_notification_with_big_text_style"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="@string/send_notification_with_big_text_style" />
+
+            <Button
+                android:id="@+id/btn_send_notification_with_big_picture_style"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="@string/send_notification_with_big_picture_style" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
