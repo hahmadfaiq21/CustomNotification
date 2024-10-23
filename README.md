@@ -1,5 +1,5 @@
 ﻿# CustomNotification (Ongoing)
 ### Preview
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/95f80582-8350-4728-b53c-a8f9b189c417">
+  <img src="https://github.com/user-attachments/assets/26be3d1f-936b-4484-9de2-a89ccb9305df">
 </p>
