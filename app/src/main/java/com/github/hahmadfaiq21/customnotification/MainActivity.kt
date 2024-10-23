@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -45,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             btnOpenDetail.setOnClickListener { openDetailActivity() }
 
-            etTitle.addTextWatcher { checkInputFilled() }
-            etMessage.addTextWatcher { checkInputFilled() }
+            etTitle.addTextChangedListener { checkInputFilled() }
+            etMessage.addTextChangedListener { checkInputFilled() }
 
             btnSendNotification.isEnabled = false
             btnSendNotification.setOnClickListener {
@@ -129,6 +128,16 @@ class MainActivity : AppCompatActivity() {
 
         if (withAction) {
             builder.addAction(R.drawable.ic_notification, "DETAIL", pendingIntent)
+            val cancelIntent = Intent(this, NotificationReceiver::class.java).apply {
+                putExtra(NotificationReceiver.NOTIFICATION_ID, NOTIFICATION_ID)
+            }
+            val cancelPendingIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                cancelIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            builder.addAction(R.drawable.ic_notification, "CANCEL", cancelPendingIntent)
         } else if (withInboxStyle) {
             builder.setStyle(
                 NotificationCompat.InboxStyle()
@@ -197,10 +206,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendNotificationWithBigPictureStyle() =
         sendNotification(withBigPictureStyle = true)
-
-    private fun EditText.addTextWatcher(afterTextChanged: () -> Unit) {
-        this.addTextChangedListener { afterTextChanged() }
-    }
 
     companion object {
         private const val NOTIFICATION_ID = 1
