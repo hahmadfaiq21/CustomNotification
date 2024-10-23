@@ -55,7 +55,7 @@
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="8dp"
                 android:text="@string/send_notification_with_action" />
 
             <Button
@@ -63,7 +63,7 @@
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="8dp"
                 android:text="@string/send_notification_with_inbox_style" />
         </TableRow>
 
@@ -74,7 +74,7 @@
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="8dp"
                 android:text="@string/send_notification_with_big_text_style" />
 
             <Button
@@ -82,7 +82,7 @@
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="8dp"
                 android:text="@string/send_notification_with_big_picture_style" />
         </TableRow>
     </TableLayout>
